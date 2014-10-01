@@ -21,6 +21,7 @@ void _start(void)
     clear_screen(0, 0, 80, 25);
 
     /* Initialize the pcbs and the ready queue */
+    static pcb_t pcbs[NUM_TASKS];
 
     /* Schedule the first task */
     scheduler_count = 0;

@@ -58,6 +58,13 @@ image : createimage bootblock kernel process1 process2 process3
 createimage : createimage.c
 	$(CC) -Wall $^ -o $@
 
+queue_test : queue_test queue 
+	./queue_test
+
+queue_test: queue_test.o queue.o
+
+queue: queue.o util.o
+
 # Put the boot block at the specified address
 bootblock : LDFLAGS += 0x0000
 bootblock : bootblock.o

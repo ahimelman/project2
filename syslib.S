@@ -1,8 +1,8 @@
 
-/* 
+/*
    Created in Oct 15, 2009.
-   This file replaces the original syslib.c. 
-   SYSCALL in syslib.c changed %eax and %eflags 
+   This file replaces the original syslib.c.
+   SYSCALL in syslib.c changed %eax and %eflags
    before calling kernel_entry. This bug is
    fixed here.
 */
@@ -12,10 +12,10 @@
 .EQU ENTRY_POINT, 0x0f00
 
 #define SYSCALL(i) \
-	pushl %eax; \ 
+	pushl %eax; \
 	movl ENTRY_POINT, %eax; \
 	pushl i;\
-	call %eax;\ 
+	call %eax;\
 	popl %eax; \
 	popl %eax
 
