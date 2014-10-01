@@ -68,7 +68,7 @@ bootblock : bootblock.o
 
 kernel : LDFLAGS += $(KERNEL_ADDR)
 # Important: the entry point is in kernel.o, so it must come first
-kernel : kernel.o entry.o lock.o scheduler.o th1.o th2.o th3.o util.o
+kernel : kernel.o entry.o lock.o scheduler.o th1.o th2.o th3.o util.o queue.o
 
 process1 : LDFLAGS += $(PROC1_ADDR)
 # Important: the entry point is in process1.o, so it must come first
