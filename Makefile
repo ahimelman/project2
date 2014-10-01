@@ -97,7 +97,7 @@ boot : image
 
 # Clean up!
 clean :
-	rm -f floppy.img image createimage bootblock kernel process1 process2 process3 hello *.o .depend 
+	rm -f floppy.img queue_test image createimage bootblock kernel process1 process2 process3 hello *.o .depend 
 .PHONY : clean distclean
 
 # Dependency management
