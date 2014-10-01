@@ -8,7 +8,8 @@
 int scheduler_count;
 
 /* Declare queues here */
-
+Queue ready_q;
+Queue blocked_q;
 
 void scheduler(void)
 {

@@ -15,6 +15,8 @@ pcb_t *current_running;
  */
 void _start(void)
 {
+    int i;
+    uint32_t stack_start;
     /* Set up the single entry-point for system calls */
     *ENTRY_POINT = &kernel_entry;
 
@@ -22,6 +24,18 @@ void _start(void)
 
     /* Initialize the pcbs and the ready queue */
     static pcb_t pcbs[NUM_TASKS];
+
+    for (i = 0; i < NUM_TASKS; i++) { 
+        pcbs[i].pid = i;
+        stack_start = STACK_MIN + (STACK_SIZE * (1 + (i * 2)));
+        pcbs[i].esp = stack_start + STACK_SIZE - 2;
+        pcbs[i].ebp = stack_start + STACK_SIZE - 2;
+        pcbs[i].is_started = FALSE;
+        pcbs[i].is_thread = (task[i]->task_type == KERNEL_THREAD);
+        pcbs[i].eip = task[i]->entry_point;
+        
+        Queue_enqueue(&ready_q, &pcbs[i]);
+    }
 
     /* Schedule the first task */
     scheduler_count = 0;

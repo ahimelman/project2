@@ -33,8 +33,8 @@ int main(void) {
 		ASSERT(*(int *)Queue_dequeue(q) == 2);
 		ASSERT(q->size == 3);
 		ASSERT(*(int *)Queue_dequeue(q) == 3);
-		ASSERT(q->size == 2);
-		ASSERT(*(int *)Queue_dequeue(q) == 4);
+                ASSERT(q->size == 2);
+	        ASSERT(*(int *)Queue_dequeue(q) == 4);
 		ASSERT(q->size == 1);
 		ASSERT(*(int *)Queue_dequeue(q) == 5);
 		ASSERT(q->size == 0);
