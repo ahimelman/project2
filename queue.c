@@ -8,6 +8,11 @@ void Queue_init(Queue_T oQueue) {
 }
 
 void Queue_enqueue(Queue_T oQueue, void *item) {
+    static int counter = 0;
+    counter++;
+        print_int(3 + counter % 10, 0, oQueue->size);
+        print_int(3 + counter % 10, 20, oQueue->length);
+        print_int(3 + counter % 10, 40, counter);
     ASSERT(oQueue->size < oQueue->length);
     oQueue->arr[oQueue->tail] = item;
     oQueue->tail = (oQueue->tail + 1) % oQueue->length;

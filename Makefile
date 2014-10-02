@@ -92,7 +92,7 @@ hello : hello1.c hello2.S
 # Copy the image to the USB drive in the fishbowl lab
 # WARNING: make sure this is right before you make this target on another system
 boot : image
-	cat image > /dev/sdf
+	cat image > /dev/sdg
 .PHONY : boot
 
 # Clean up!

@@ -14,10 +14,19 @@ Queue blocked_q;
 void scheduler(void)
 {
     ++scheduler_count;
+    pcb_t *next = (pcb_t *)Queue_dequeue(&ready_q);
+    current_running = next;
+    restore_context(next); 
 }
 
 void do_yield(void)
 {
+    // asm ("xchg %bx, %bx");
+    Queue_enqueue(&ready_q, (void *)current_running);
+    // asm ("xchg %bx, %bx");
+    asm ("call scheduler_entry");
+    // scheduler_entry();
+    return;
 }
 
 void do_exit(void)

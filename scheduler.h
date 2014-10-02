@@ -19,6 +19,9 @@ extern Queue blocked_q;
  */
 void scheduler_entry(void);
 
+/* restore context of entry in pcb. Implemented in entry.S */
+void restore_context(pcb_t *);
+
 /* Change current_running to the next task */
 void scheduler(void);
 
