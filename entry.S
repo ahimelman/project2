@@ -7,8 +7,21 @@
 	.text
 	.code32
 
+.equ SYSCALL_ARG, 8
+
 	.globl	kernel_entry
 kernel_entry:
+	pushl %ebp
+	movl %esp, %ebp
+
+	cmpl $0, SYSCALL_ARG(%ebp)
+	je call_do_yield
+	call do_exit
+	jmp ret_kernel_entry
+call_do_yield:
+	call do_yield
+ret_kernel_entry:	
+	leave
 	ret
 
 .equ PCB_EAX, 4
@@ -27,7 +40,6 @@ kernel_entry:
 .equ STACK_EIP, 4
 
 	.globl	scheduler_entry
-
 scheduler_entry:
 #        xchg %bx, %bx
         pushl %ebp
