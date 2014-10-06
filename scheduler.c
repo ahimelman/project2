@@ -36,12 +36,21 @@ void do_exit(void)
 
 void block(void)
 {
+    //print_str(0, 0, "blocking");
+    //asm ("xchg %bx, %bx");
+    Queue_enqueue(&blocked_q, (void *)current_running);
+    asm ("call scheduler_entry");
+    return;
 }
 
 void unblock(void)
 {
+    //print_str(0, 0, "un-blocking");
+    //asm ("xchg %bx, %bx");
+    Queue_enqueue(&ready_q, Queue_dequeue(&blocked_q));
 }
 
 bool_t blocked_tasks(void)
 {
+    return !Queue_is_empty(&blocked_q);
 }

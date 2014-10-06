@@ -8,7 +8,7 @@
 #include "scheduler.h"
 
 enum {
-    SPIN = TRUE,
+    SPIN = FALSE,
 };
 
 void lock_init(lock_t * l)
@@ -16,6 +16,7 @@ void lock_init(lock_t * l)
     if (SPIN) {
         l->status = UNLOCKED;
     } else {
+        l->status = UNLOCKED;
     }
 }
 
@@ -26,6 +27,11 @@ void lock_acquire(lock_t * l)
             do_yield();
         l->status = LOCKED;
     } else {
+        if (l->status == UNLOCKED) {
+            l->status = LOCKED;
+        } else {
+            block();
+        }
     }
 }
 
@@ -34,5 +40,10 @@ void lock_release(lock_t * l)
     if (SPIN) {
         l->status = UNLOCKED;
     } else {
+        if (blocked_tasks()) {
+            unblock();
+        } else {
+            l->status = UNLOCKED;
+        }
     }
 }
