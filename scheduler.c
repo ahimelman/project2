@@ -25,12 +25,13 @@ void do_yield(void)
     Queue_enqueue(&ready_q, (void *)current_running);
     // asm ("xchg %bx, %bx");
     asm ("call scheduler_entry");
-    // scheduler_entry();
     return;
 }
 
 void do_exit(void)
 {
+    asm ("call scheduler_entry");
+    return;
 }
 
 void block(void)

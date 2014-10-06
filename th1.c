@@ -30,7 +30,6 @@ void clock_thread(void)
         print_str(24, 50, "Time (in seconds) : ");
         print_int(24, 70, time - start_time);
         print_counter();
-	// asm ("xchg %bx, %bx");
         do_yield();
     }
 }
