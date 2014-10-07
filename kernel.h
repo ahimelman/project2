@@ -45,4 +45,16 @@ extern pcb_t *current_running;
 
 void kernel_entry(int fn);
 
+/* Queue interface */
+
+typedef struct Queue *Queue_T;
+
+void Queue_init(Queue_T oQueue);
+
+void Queue_enqueue(Queue_T oQueue, void *item);
+
+void *Queue_dequeue(Queue_T oQueue);
+
+bool_t Queue_is_empty(Queue_T oQueue);
+
 #endif                          /* KERNEL_H */

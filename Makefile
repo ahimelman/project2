@@ -58,17 +58,13 @@ image : createimage bootblock kernel process1 process2 process3
 createimage : createimage.c
 	$(CC) -Wall $^ -o $@
 
-queue_test : queue_test.c queue.c util.c
-	gcc -Wall -fno-builtin queue_test.c queue.c util.c -o queue_test 
-	./queue_test
-
 # Put the boot block at the specified address
 bootblock : LDFLAGS += 0x0000
 bootblock : bootblock.o
 
 kernel : LDFLAGS += $(KERNEL_ADDR)
 # Important: the entry point is in kernel.o, so it must come first
-kernel : kernel.o entry.o lock.o scheduler.o th1.o th2.o th3.o util.o queue.o
+kernel : kernel.o entry.o lock.o scheduler.o th1.o th2.o th3.o util.o 
 
 process1 : LDFLAGS += $(PROC1_ADDR)
 # Important: the entry point is in process1.o, so it must come first

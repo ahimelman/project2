@@ -5,14 +5,13 @@
 
 #include "common.h"
 #include "kernel.h"
-#include "queue.h"
 
 /* Number of times scheduler() was called */
 extern int scheduler_count;
 
 /* Declare q's */
-extern Queue ready_q;
-extern Queue blocked_q;
+extern Queue_T ready_q;
+extern Queue_T blocked_q;
 
 /* Save the context and the kernel stack before calling scheduler
  * This function is implemented in entry.S
