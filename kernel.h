@@ -24,6 +24,7 @@ enum {
     STACK_MAX = 0x20000,
 };
 
+/* define pcb struct */
 typedef struct pcb {
     uint32_t pid;
     uint32_t eax;
@@ -36,7 +37,6 @@ typedef struct pcb {
     uint32_t esp;
     uint32_t eip;
     uint32_t eflags;
-    bool_t is_started;
     bool_t is_thread;
 } pcb_t;
 

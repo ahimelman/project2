@@ -14,6 +14,8 @@ Queue blocked_q;
 void scheduler(void)
 {
     ++scheduler_count;
+
+    /* Get next ready process, restore context */
     pcb_t *next = (pcb_t *)Queue_dequeue(&ready_q);
     current_running = next;
     restore_context(next); 
@@ -21,9 +23,7 @@ void scheduler(void)
 
 void do_yield(void)
 {
-    // asm ("xchg %bx, %bx");
     Queue_enqueue(&ready_q, (void *)current_running);
-    // asm ("xchg %bx, %bx");
     asm ("call scheduler_entry");
     return;
 }
@@ -36,8 +36,7 @@ void do_exit(void)
 
 void block(void)
 {
-    //print_str(0, 0, "blocking");
-    //asm ("xchg %bx, %bx");
+    /* Add current process to blocked queue, context switch */
     Queue_enqueue(&blocked_q, (void *)current_running);
     asm ("call scheduler_entry");
     return;
@@ -45,8 +44,7 @@ void block(void)
 
 void unblock(void)
 {
-    //print_str(0, 0, "un-blocking");
-    //asm ("xchg %bx, %bx");
+    /* Enqueue head of blocked queue into ready queue */
     Queue_enqueue(&ready_q, Queue_dequeue(&blocked_q));
 }
 

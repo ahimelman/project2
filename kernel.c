@@ -27,16 +27,17 @@ void _start(void)
    
     Queue_init(&ready_q);
     Queue_init(&blocked_q);
-    
+   
+    /* Initialize pcb for each task */ 
     for (i = 0; i < NUM_TASKS; i++) {
         pcbs[i].pid = i;
         stack_start = STACK_MIN + (STACK_SIZE * (1 + (i * 2)));
         pcbs[i].esp = stack_start + STACK_SIZE - 2;
         pcbs[i].ebp = stack_start + STACK_SIZE - 2;
-        pcbs[i].is_started = FALSE;
         pcbs[i].is_thread = (task[i]->task_type == KERNEL_THREAD);
         pcbs[i].eip = task[i]->entry_point;
 
+        /* Add pcb to ready queue */
         Queue_enqueue(&ready_q, (void *)&pcbs[i]);
     }
 

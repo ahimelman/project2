@@ -14,6 +14,7 @@ kernel_entry:
 	pushl %ebp
 	movl %esp, %ebp
 
+# check which type of system call
 	cmpl $0, SYSCALL_ARG(%ebp)
 	je call_do_yield
 	call do_exit
@@ -41,9 +42,10 @@ ret_kernel_entry:
 
 	.globl	scheduler_entry
 scheduler_entry:
-#        xchg %bx, %bx
         pushl %ebp
         movl %esp, %ebp
+
+# don't save context first time        
         cmpl $0, scheduler_count 
         je call_scheduler
 
@@ -53,6 +55,7 @@ scheduler_entry:
         movl current_running, %eax
        
         # save basic regs
+        # don't save callee save b.c. they'll be restored by calling code
         movl %ebx, PCB_EBX(%eax)
         movl %esi, PCB_ESI(%eax)
         movl %edi, PCB_EDI(%eax)
@@ -85,19 +88,21 @@ call_scheduler:
     .globl restore_context
 
 restore_context:
-#        xchg %bx, %bx
         pushl %ebp
         movl %esp, %ebp
         
+# move pointer to pcb into eax
         movl ARG_PCB_PTR(%ebp), %eax
         pushl PCB_EFLAGS(%eax)
         popfl
+# restore regs
         movl PCB_EBX(%eax), %ebx
         movl PCB_ESI(%eax), %esi
         movl PCB_EDI(%eax), %edi
         movl PCB_EBP(%eax), %ebp
         movl PCB_ESP(%eax), %esp
         movl PCB_EIP(%eax), %eax
+# jump to eip        
         jmp %eax
 
 
