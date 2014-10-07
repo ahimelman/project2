@@ -8,7 +8,7 @@ Queue ADT
 #include "common.h"
 #include "util.h"
 
-#define MAX_SIZE 5
+#define MAX_SIZE 9
 
 typedef struct Queue {
     void *arr[MAX_SIZE];
