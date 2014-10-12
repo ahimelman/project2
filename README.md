@@ -1,3 +1,5 @@
+Aaron Himelman, Riley Thomasson
+
 We first initialize the pcb for each task in kernel.c:_start(), and then add each to the ready queue.
 We included our queue implementation in kernel.c because we needed to access NUM_TASKS, which is 
 located in tasks.c. Instead of using an entry point variable in the PCB, we initialize the EIP variable to
